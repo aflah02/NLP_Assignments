@@ -91,8 +91,6 @@ def findTokens(sentence):
         indexes = re.finditer(url, token)
         for index in indexes:
           allTokens.append(token[index.start():index.end()])
-          allTokens.append(token[:index.start()])
-          allTokens.append(token[index.end():])
 
     elif findUsernames(token):
       usernames = findUsernames(token)
@@ -100,8 +98,6 @@ def findTokens(sentence):
         indexes = re.finditer(username, token)
         for index in indexes:
           allTokens.append(token[index.start():index.end()])
-          allTokens.append(token[:index.start()])
-          allTokens.append(token[index.end():])
 
     else:
       # split on punctuation
