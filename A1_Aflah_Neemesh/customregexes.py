@@ -4,7 +4,7 @@ def findUsernames(sentence):
   return re.findall("[^\wÀ-ÖØ-öø-ÿ@_]?(@[A-Za-z0-9_]{1,15})\\b", sentence)
 
 def findUsernameCount(sentence):
-  return len(re.findall("[^\wÀ-ÖØ-öø-ÿ@_]?(@[A-Za-z0-9_]{1,15})\\b", sentence))
+  return len(findUsernames(sentence))
 
 def findURLs(sentence):
   falsePositiveIndicators = ['but', 'don', 'we', 'what', 'you', 'night', 'since', 'especially', 'keep', 'lol', 'and', 'last']
@@ -35,14 +35,14 @@ def findSentence(paragraph):
   sentences = re.split("[!?]+", paragraph)
 
   # Split on . followed by space and capital letter
+  list_of_abbreviations = ['Mr', 'Ms', 'Mrs', "Dr"]
   new_sentence_components = []
+
   for sentence in sentences:
-    # Check for abbreviations
     if not re.search("\.\s+[A-Z]", sentence):
       new_sentence_components.append(sentence)
     else:
-      # Check no abbreviations before the period
-      new_sentence_components.extend(re.split("(\.\s+[A-Z])", sentence))
+      new_sentence_components.extend(re.split("\.\s+([A-Z]+\w*)", sentence))
   sentences = new_sentence_components
 
   list_of_abbreviations = ['Mr', 'Ms', 'Mrs', "Dr", "Miss"]
@@ -51,24 +51,23 @@ def findSentence(paragraph):
   # Rejoin sentences that end with an abbreviation
   new_sentence_components = [sentences[0]]
   i = 0
-  j = 0
-  while i < len(sentences) - 1 and j < len(new_sentence_components):
-    if re.search(check_if_token_ends_with_abbreviation, new_sentence_components[j]):
-      new_sentence_components[j] = new_sentence_components[j] + sentences[i + 1]
+  while i < len(sentences) - 1:
+    if re.search(check_if_token_ends_with_abbreviation, sentences[i]):
+      new_sentence_components[-1] = new_sentence_components[-1] + '. ' + sentences[i + 1]
       i += 1
     else:
       new_sentence_components.append(sentences[i + 1])
-      j += 1
       i += 1
   sentences = new_sentence_components
-  # Remove empty strings
+
+  # Filter empty strings
   new_sentence_components = []
   for i in range(len(sentences)):
     if not match_empty(sentences[i]):
       new_sentence_components.append(sentences[i])
+  sentences = new_sentence_components
 
   # Remove leading and trailing spaces
-  sentences = new_sentence_components
   for i in range(len(sentences)):
     sentences[i] = lrstrip(sentences[i])
   
@@ -80,9 +79,12 @@ def findSentenceCount(paragraph):
 def findTokens(sentence):
   # Split on Whitespace using regex
   tokens = re.split("\s+", sentence)
+
   # Check URLs and Users
   allTokens = []
+
   for token in tokens:
+
     if findURLs(token):
       URLs = findURLs(token)
       for url in URLs:
@@ -91,6 +93,7 @@ def findTokens(sentence):
           allTokens.append(token[index.start():index.end()])
           allTokens.append(token[:index.start()])
           allTokens.append(token[index.end():])
+
     elif findUsernames(token):
       usernames = findUsernames(token)
       for username in usernames:
@@ -99,17 +102,20 @@ def findTokens(sentence):
           allTokens.append(token[index.start():index.end()])
           allTokens.append(token[:index.start()])
           allTokens.append(token[index.end():])
+
     else:
       # split on punctuation
       if re.search("[\.!?]+", token):
         allTokens.extend(re.split("([\.!?]+)", token))
       else:
         allTokens.append(token)
+
   # Remove empty strings
   new_token_components = []
   for i in range(len(allTokens)):
     if not match_empty(allTokens[i]):
       new_token_components.append(allTokens[i])
+
   # Remove leading and trailing spaces
   allTokens = new_token_components
   for i in range(len(allTokens)):
@@ -120,10 +126,16 @@ def findTokenCount(sentence):
   return len(findTokens(sentence))
 
 def findWordsStartingWithVowel(sentence):
-  return len(re.findall("\\b[aeiouAEIOU][\w|À-Ö|Ø-ö|ø-ÿ|'|-]*\\b", sentence))
+  return re.findall("\\b[aeiouAEIOU][\w|À-Ö|Ø-ö|ø-ÿ|'|-]*\\b", sentence)
+
+def countWordsStartingWithVowel(sentence):
+  return len(findWordsStartingWithVowel(sentence))
 
 def findWordsStartingWithConsonant(sentence):
-  return len(re.findall("\\s([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][\w|À-Ö|Ø-ö|ø-ÿ|'|-]*)\\b", sentence))
+  return re.findall("\\s([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][\w|À-Ö|Ø-ö|ø-ÿ|'|-]*)\\b", sentence)
+
+def countWordsStartingWithConsonant(sentence):
+  return len(findWordsStartingWithConsonant(sentence))
 
 def lowercase(text):
   lowercase = "abcdefghijklmnopqrstuvwxyz"
