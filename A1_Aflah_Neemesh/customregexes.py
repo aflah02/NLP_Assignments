@@ -30,20 +30,37 @@ def lrstrip(text):
 def match_empty(text):
     return re.match(r'^\s*$', text)
 
-def findSentenceCount(paragraph):
+def findSentence(paragraph):
   # Split on ! and ? first
   sentences = re.split("[!?]+", paragraph)
 
   # Split on . followed by space and capital letter
-
   new_sentence_components = []
   for sentence in sentences:
+    # Check for abbreviations
     if not re.search("\.\s+[A-Z]", sentence):
       new_sentence_components.append(sentence)
     else:
-      new_sentence_components.extend(re.split("\.\s+([A-Z]+\w*)", sentence))
+      # Check no abbreviations before the period
+      new_sentence_components.extend(re.split("(\.\s+[A-Z])", sentence))
   sentences = new_sentence_components
 
+  list_of_abbreviations = ['Mr', 'Ms', 'Mrs', "Dr", "Miss"]
+  check_if_token_ends_with_abbreviation = re.compile(r'\s(' + r'|'.join(list_of_abbreviations) + r')')
+
+  # Rejoin sentences that end with an abbreviation
+  new_sentence_components = [sentences[0]]
+  i = 0
+  j = 0
+  while i < len(sentences) - 1 and j < len(new_sentence_components):
+    if re.search(check_if_token_ends_with_abbreviation, new_sentence_components[j]):
+      new_sentence_components[j] = new_sentence_components[j] + sentences[i + 1]
+      i += 1
+    else:
+      new_sentence_components.append(sentences[i + 1])
+      j += 1
+      i += 1
+  sentences = new_sentence_components
   # Remove empty strings
   new_sentence_components = []
   for i in range(len(sentences)):
@@ -55,7 +72,10 @@ def findSentenceCount(paragraph):
   for i in range(len(sentences)):
     sentences[i] = lrstrip(sentences[i])
   
-  return len(sentences)
+  return (sentences)
+
+def findSentenceCount(paragraph):
+  return len(findSentence(paragraph))
 
 def findTokens(sentence):
   # Split on Whitespace using regex
