@@ -39,10 +39,10 @@ def findSentence(paragraph):
   new_sentence_components = []
 
   for sentence in sentences:
-    if not re.search("\.\s+[A-Z]", sentence):
+    if not re.search("\.\s+[A-Za-z ]", sentence):
       new_sentence_components.append(sentence)
     else:
-      new_sentence_components.extend(re.split("\.\s+([A-Z]+\w*)", sentence))
+      new_sentence_components.extend(re.split("\.\s+([A-Za-z ]+\w*)", sentence))
   sentences = new_sentence_components
 
   list_of_abbreviations = ['Mr', 'Ms', 'Mrs', "Dr", "Miss"]
