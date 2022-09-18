@@ -6,6 +6,27 @@ def findUsernames(sentence):
 def findUsernameCount(sentence):
   return len(findUsernames(sentence))
 
+def findURLsandHTML(sentence):
+  falsePositiveIndicators = ['but', 'don', 'we', 'what', 'you', 'night', 'since', 'especially', 'keep', 'lol', 'and', 'last']
+  falsePositiveIndicatorsRegex = re.compile(r'^(' + r'|'.join(falsePositiveIndicators) + r')$', re.IGNORECASE)
+  urls = re.findall("(?:http://|https://)?[A-Za-z0-9_]+\.[a-z][A-Za-z0-9_]{1,}[\.A-Za-z0-9_]*[/?[A-Za-z0-9_~]*]*\.?[A-Za-z0-9_]*\\b", sentence)
+  all_urls = []
+  for url in urls:
+    dummy = re.split("\.", url)
+    shouldAdd = True
+    for comps in dummy:
+      if (re.search(falsePositiveIndicatorsRegex, comps) or re.search("^[0-9_]*$", comps)):
+        shouldAdd = False
+    if shouldAdd:
+      all_urls.append(url)
+  if re.search("&quot;", sentence):
+    all_urls.append("&quot;")
+  if re.search("&amp;", sentence):
+    all_urls.append("&amp;")
+  if re.search("&lt;", sentence):
+    all_urls.append("&lt;")
+  return all_urls
+
 def findURLs(sentence):
   falsePositiveIndicators = ['but', 'don', 'we', 'what', 'you', 'night', 'since', 'especially', 'keep', 'lol', 'and', 'last']
   falsePositiveIndicatorsRegex = re.compile(r'^(' + r'|'.join(falsePositiveIndicators) + r')$', re.IGNORECASE)
