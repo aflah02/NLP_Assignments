@@ -15,6 +15,7 @@ class LMSmoothers:
             self.laplace_bigrams[bigram] = (freq + 1) / (self.vocab_len + len(self.bigrams))
         return self.laplace_bigrams
         
+        
     
         
 
