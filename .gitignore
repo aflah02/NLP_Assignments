@@ -161,3 +161,6 @@ cython_debug/
 
 ./.ipynb_checkpoints
 A2/laplace_smoothed_bigrams.pickle
+A2/add_5_smoothed_bigrams.pickle
+A2/add_5_with_unigram_prior_smoothed_bigrams.pickle
+A2/bigram_wrapper.pickle
