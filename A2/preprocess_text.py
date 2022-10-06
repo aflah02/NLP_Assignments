@@ -114,3 +114,8 @@ def remove_users(text):
 
 def lowercase_text(text):
     return lowercase(text)
+
+def remove_alphanum(text):
+    text = re.sub("\d+[a-z]*", '', text)
+    text = re.sub("[a-z]*[0-9]+", '', text)
+    return text
