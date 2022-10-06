@@ -8,18 +8,23 @@ class LanguageModel:
         self.bigrams = bigrams
         self.unigram_counts = unigram_counts
         self.sentiment_model = sentiment_model
-        if sentiment_model == 'vader':
-            self.dump_scores = pickle.load(open('ls_word_sentiment_vader.pickle', 'rb'))
-        elif sentiment_model == 'hf':
-            self.dump_scores = pickle.load(open('ls_word_sentiment_hf.pickle', 'rb'))
         self.score_dict = {}
-        for line in self.dump_scores:
-            self.score_dict[line[0]] = line[1]
         self.add_to_numerator = add_to_numerator
         self.add_to_denominator = add_to_denominator
         self.add_externally = add_externally
         self.sentiment_scale_factor = sentiment_scale_factor
         self.repetiton_penalty = repetition_penalty
+        self.load_lexicon()
+
+    def load_lexicon(self):
+        dump_scores = None
+        print(self.sentiment_model)
+        if self.sentiment_model == 'vader':
+            dump_scores = pickle.load(open('ls_word_sentiment_vader.pickle', 'rb'))
+        elif self.sentiment_model == 'hf':
+            dump_scores = pickle.load(open('ls_word_sentiment_hf.pickle', 'rb'))
+        for line in dump_scores:
+            self.score_dict[line[0]] = line[1]
 
     def generate_text(self, prompt, sentiment, length=20):
         """
