@@ -1,10 +1,11 @@
 import pickle
 
+
 class LanguageModel:
     """
     Bigram Model for Text Generation Based on a Prompt
     """
-    def __init__(self, bigrams, unigram_counts, sentiment_model, add_to_numerator=False, add_to_denominator=False, add_externally=True, sentiment_scale_factor=0.5, repetition_penalty=0.2):
+    def __init__(self, bigrams, unigram_counts, sentiment_model, add_to_numerator=False, add_to_denominator=False, add_externally=True, sentiment_scale_factor=1e-6, repetition_penalty=0.2):
         self.bigrams = bigrams
         self.unigram_counts = unigram_counts
         self.sentiment_model = sentiment_model
@@ -18,7 +19,6 @@ class LanguageModel:
 
     def load_lexicon(self):
         dump_scores = None
-        print(self.sentiment_model)
         if self.sentiment_model == 'vader':
             dump_scores = pickle.load(open('ls_word_sentiment_vader.pickle', 'rb'))
         elif self.sentiment_model == 'hf':
@@ -41,7 +41,8 @@ class LanguageModel:
                 generated_so_far[word] = 1
 
         for i in range(length):
-            next_word = self.get_next_word(last_word, sentiment, generated_so_far)
+
+            next_word = self.get_next_word(last_word, sentiment, generated_so_far, sentence_so_far = prompt)
 
             if next_word in generated_so_far:
                 generated_so_far[next_word] += 1
@@ -52,7 +53,7 @@ class LanguageModel:
             last_word = next_word
         return prompt
     
-    def get_next_word(self, word, sentiment, generated_so_far):
+    def get_next_word(self, word, sentiment, generated_so_far, sentence_so_far):
         """
         Get the next word based on the last word
         """
@@ -64,10 +65,10 @@ class LanguageModel:
                 denominator = self.unigram_counts[bigram[0]]
 
                 if self.add_to_numerator:
-                    numerator += self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
+                    numerator *= self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
 
                 if self.add_to_denominator:
-                    denominator -= self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
+                    denominator /= self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
 
                 normalized_prob = numerator / denominator
 
@@ -76,6 +77,10 @@ class LanguageModel:
 
                 if bigram[1] in generated_so_far.keys():
                     normalized_prob -= self.repetiton_penalty * generated_so_far[bigram[1]]
+                # sentence_after_choosing = " ".join(sentence_so_far + [bigram[1]])
+
+                # if self.sentance_penalty:
+
 
                 if normalized_prob > highest_freq:
                     highest_freq = normalized_prob
@@ -88,10 +93,8 @@ class LanguageModel:
         Compute Perplexity of a Sentence
         """
         perplexity = 1
-        len_vocab = len(list(set([item for sublist in self.bigrams for item in sublist])))
-        # First word
-        perplexity *= 1/len_vocab
+        vocab_size = len(self.unigram_counts)
+        perplexity *= vocab_size
         for i in range(len(sentence) - 1):
-            bigram = (sentence[i], sentence[i + 1])
-            perplexity *= 1 / self.bigrams[bigram]
+            perplexity *= 1 / self.bigrams[(sentence[i], sentence[i + 1])]
         return perplexity ** (1 / len(sentence))

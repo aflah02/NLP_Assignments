@@ -115,7 +115,16 @@ def remove_users(text):
 def lowercase_text(text):
     return lowercase(text)
 
-def remove_alphanum(text):
-    text = re.sub("\d+[a-z]*", '', text)
-    text = re.sub("[a-z]*[0-9]+", '', text)
-    return text
+def remove_alphanum(list_of_tokens):
+    new_toks = []
+    for token in list_of_tokens:
+        countNum = 0
+        countAlpha = 0
+        for char in token:
+            if char.isalpha():
+                countAlpha += 1
+            elif char.isdigit():
+                countNum += 1
+        if countAlpha > 0 and countNum == 0:
+            new_toks.append(token)
+    return new_toks

@@ -20,10 +20,9 @@ def preprocess_text(text, remove_alnum = False):
     text = remove_users(text)
     text = remove_punctuations(text)
     text = remove_whitespaces(text)
-    if remove_alnum:
-        text = remove_alphanum(text)
     text = tokenization(text)
     text = spelling_correction(text, 'textblob')
+    text = remove_alphanum(text)
     return ' '.join(text)
 
 class IntrisicEvaluation:
