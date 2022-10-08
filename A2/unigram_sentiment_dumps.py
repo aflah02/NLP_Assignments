@@ -51,5 +51,5 @@ for word in tqdm(unigram_counts):
     if pos_neg == 'NEGATIVE':
         score = -score
     ls_word_sentiment_hf.append((word,score))
-with open('ls_word_sentiment_hf.pickle', 'wb') as f:
+with open('ls_word_sentimexnt_hf.pickle', 'wb') as f:
     pickle.dump(ls_word_sentiment_hf, f)
