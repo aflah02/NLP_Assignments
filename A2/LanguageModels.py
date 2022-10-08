@@ -1,5 +1,5 @@
 import pickle
-
+import numpy as np
 
 class LanguageModel:
     """
@@ -57,8 +57,11 @@ class LanguageModel:
         """
         Get the next word based on the last word
         """
-        highest_freq = 0
-        next_word = ''
+
+        # Store Top 5 Words
+        top_words = []
+        top_word_freqs = []
+
         for bigram, freq in self.bigrams.items():
             if bigram[0] == word:
                 numerator = freq
@@ -77,15 +80,20 @@ class LanguageModel:
 
                 if bigram[1] in generated_so_far.keys():
                     normalized_prob -= self.repetiton_penalty * generated_so_far[bigram[1]]
-                # sentence_after_choosing = " ".join(sentence_so_far + [bigram[1]])
 
-                # if self.sentance_penalty:
+                if len(top_words) < 5:
+                    top_words.append(bigram[1])
+                    top_word_freqs.append(normalized_prob)
+                else:
+                    if normalized_prob > min(top_word_freqs):
+                        min_index = top_word_freqs.index(min(top_word_freqs))
+                        top_words[min_index] = bigram[1]
+                        top_word_freqs[min_index] = normalized_prob
 
-
-                if normalized_prob > highest_freq:
-                    highest_freq = normalized_prob
-                    next_word = bigram[1]
-
+        # choose a word from the top 5 with probability proportional to its frequency and seed
+        top_word_freqs = np.array(top_word_freqs)
+        top_word_freqs = top_word_freqs / top_word_freqs.sum()
+        next_word = np.random.choice(top_words, p=top_word_freqs)
         return next_word
 
     def computePerplexity(self, sentence):

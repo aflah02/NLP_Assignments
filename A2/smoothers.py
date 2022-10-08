@@ -16,7 +16,7 @@ class LMSmoothers:
         Laplace Smoothing
         """
         for bigram, freq in self.bigrams.items():
-            self.laplace_bigrams[bigram] = (freq + 1) / (self.unigram_counts[bigram[0]] + len(self.bigrams))
+            self.laplace_bigrams[bigram] = (freq + 1) / (self.unigram_counts[bigram[0]] + self.vocab_len)
         return self.laplace_bigrams
     
     def add_k(self, k):
