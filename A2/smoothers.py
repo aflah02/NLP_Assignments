@@ -24,7 +24,7 @@ class LMSmoothers:
         Add-k Smoothing
         """
         for bigram, freq in self.bigrams.items():
-            self.add_k_bigrams[bigram] = (freq + k) / (self.unigram_counts[bigram[0]] + k * len(self.bigrams))
+            self.add_k_bigrams[bigram] = (freq + k) / (self.unigram_counts[bigram[0]] + k * len(self.vocab_len))
         return self.add_k_bigrams
 
     def add_k_with_unigram_prior(self, k):
