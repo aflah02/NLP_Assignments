@@ -22,6 +22,7 @@ tqdm.pandas()
 #     return text
 # df['preprocessed_text'] = df['TEXT'].progress_apply(preprocess_text)
 # preprocess_text = df['preprocessed_text'].to_list()
+
 df = pd.read_csv('preprocessed_A1.csv')
 preprocess_text = df['preprocessed_text'].to_list()
 for i in range(len(preprocess_text)):
@@ -39,7 +40,7 @@ sid = SentimentIntensityAnalyzer()
 ls_word_sentiment_vader = []
 for word in tqdm(unigram_counts):
     ls_word_sentiment_vader.append((word, sid.polarity_scores(word)['compound']))
-with open('ls_word_sentiment_vader.pickle', 'wb') as f:
+with open('Pos Neg Prompts\ls_word_sentiment_vader.pickle', 'wb') as f:
     pickle.dump(ls_word_sentiment_vader, f)
 
 hf_sentiment_model = pipeline('sentiment-analysis')
@@ -51,5 +52,5 @@ for word in tqdm(unigram_counts):
     if pos_neg == 'NEGATIVE':
         score = -score
     ls_word_sentiment_hf.append((word,score))
-with open('ls_word_sentimexnt_hf.pickle', 'wb') as f:
+with open('Pos Neg Prompts\ls_word_sentiment_hf.pickle', 'wb') as f:
     pickle.dump(ls_word_sentiment_hf, f)

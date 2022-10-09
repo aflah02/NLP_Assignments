@@ -5,7 +5,7 @@ class LanguageModel:
     """
     Bigram Model for Text Generation Based on a Prompt
     """
-    def __init__(self, bigrams, unigram_counts, sentiment_model, add_to_numerator=False, add_to_denominator=False, add_externally=True, sentiment_scale_factor=1e-6, repetition_penalty=0.2):
+    def __init__(self, bigrams, unigram_counts, sentiment_model, add_to_numerator=False, add_to_denominator=False, add_externally=True, sentiment_scale_factor=1, repetition_penalty=0.2, normalizebyPerplexity=False):
         self.bigrams = bigrams
         self.unigram_counts = unigram_counts
         self.sentiment_model = sentiment_model
@@ -15,14 +15,15 @@ class LanguageModel:
         self.add_externally = add_externally
         self.sentiment_scale_factor = sentiment_scale_factor
         self.repetiton_penalty = repetition_penalty
+        self.normalizebyPerplexity = normalizebyPerplexity
         self.load_lexicon()
 
     def load_lexicon(self):
         dump_scores = None
         if self.sentiment_model == 'vader':
-            dump_scores = pickle.load(open('ls_word_sentiment_vader.pickle', 'rb'))
+            dump_scores = pickle.load(open('Pos Neg Prompts\ls_word_sentiment_vader.pickle', 'rb'))
         elif self.sentiment_model == 'hf':
-            dump_scores = pickle.load(open('ls_word_sentiment_hf.pickle', 'rb'))
+            dump_scores = pickle.load(open('Pos Neg Prompts\ls_word_sentiment_hf.pickle', 'rb'))
         for line in dump_scores:
             self.score_dict[line[0]] = line[1]
 
@@ -80,6 +81,9 @@ class LanguageModel:
 
                 if bigram[1] in generated_so_far.keys():
                     normalized_prob -= self.repetiton_penalty * generated_so_far[bigram[1]]
+                
+                if self.normalizebyPerplexity:
+                    normalized_prob /= self.computePerplexity(sentence_so_far + [bigram[1]])
 
                 if len(top_words) < 5:
                     top_words.append(bigram[1])
