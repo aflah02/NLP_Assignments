@@ -168,3 +168,13 @@ A2/bigram_model_dumps/add_5_smoothed_bigrams.pickle
 A2/bigram_model_dumps/add_5_with_unigram_prior_smoothed_bigrams.pickle
 A2/bigram_model_dumps/bigram_wrapper.pickle
 A2/bigram_model_dumps/laplace_smoothed_bigrams.pickle
+
+./.ipynb_checkpoints
+Neemesh_A2/laplace_smoothed_bigrams.pickle
+Neemesh_A2/add_5_smoothed_bigrams.pickle
+Neemesh_A2/add_5_with_unigram_prior_smoothed_bigrams.pickle
+Neemesh_A2/bigram_wrapper.pickle
+Neemesh_A2/bigram_model_dumps/add_5_smoothed_bigrams.pickle
+Neemesh_A2/bigram_model_dumps/add_5_with_unigram_prior_smoothed_bigrams.pickle
+Neemesh_A2/bigram_model_dumps/bigram_wrapper.pickle
+Neemesh_A2/bigram_model_dumps/laplace_smoothed_bigrams.pickle
