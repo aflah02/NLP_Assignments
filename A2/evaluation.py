@@ -24,7 +24,7 @@ def preprocess_text(text):
     text = remove_alphanum(text)
     return ' '.join(text)
 
-class IntrisicEvaluation:
+class IntrinsicEvaluation:
     """
     Perform Intrinsic Evaluation on the given generated sentences
     """
@@ -36,7 +36,8 @@ class IntrisicEvaluation:
         """
         Gets the Perplexity of current sentence
         """
-        return self.computePerplexity(sentence)
+        lm = self.lm
+        return lm.computePerplexity(sentence = sentence)
     
     def eval(self):
         """

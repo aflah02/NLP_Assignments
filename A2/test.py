@@ -1,6 +1,6 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import numpy as np
-from evaluation import ExtrinsicEvaluation
+from evaluation import ExtrinsicEvaluation, IntrinsicEvaluation
 
 def find_polarity_scores(txt):
     sid = SentimentIntensityAnalyzer()
@@ -74,36 +74,36 @@ np.random.shuffle(txt)
 
 ExtrinsicEvaluation("B").eval(txt)
 
-print("-----")
+print("--------------------------------------------------------------------------")
 
-neg_txt = []
-with open("A2/neg_gen_mul_numerator.txt", 'r') as f:
-    neg_txt = f.readlines()
-for each in range(len(neg_txt)):
-    neg_txt[each] = neg_txt[each][:-2]
-    neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
+# neg_txt = []
+# with open("A2/neg_gen_mul_numerator.txt", 'r') as f:
+#     neg_txt = f.readlines()
+# for each in range(len(neg_txt)):
+#     neg_txt[each] = neg_txt[each][:-2]
+#     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
-pos_txt = []
-with open("A2/pos_gen_only_ext.txt", 'r') as f:
-    pos_txt = f.readlines()
-for each in range(len(pos_txt)):
-    pos_txt[each] = pos_txt[each][:-2]
-    pos_txt[each] = ' '.join(pos_txt[each].split()[:-1])
+# pos_txt = []
+# with open("A2/pos_gen_only_ext.txt", 'r') as f:
+#     pos_txt = f.readlines()
+# for each in range(len(pos_txt)):
+#     pos_txt[each] = pos_txt[each][:-2]
+#     pos_txt[each] = ' '.join(pos_txt[each].split()[:-1])
 
-print(find_polarity_scores(neg_txt), np.array([0]*250))
-print((find_polarity_scores(neg_txt)==np.array([0]*250)).sum())
-print((find_polarity_scores(pos_txt)==np.array([1]*250)).sum())
+# print(find_polarity_scores(neg_txt), np.array([0]*250))
+# print((find_polarity_scores(neg_txt)==np.array([0]*250)).sum())
+# print((find_polarity_scores(pos_txt)==np.array([1]*250)).sum())
 
-txt = neg_txt + pos_txt
-for i in range(500):
-    txt[i] = [txt[i]]
-    if i<250:
-        txt[i].append(0)
-    else:
-        txt[i].append(1)
-    txt[i] = np.array(txt[i])
-txt = np.array(txt)
+# txt = neg_txt + pos_txt
+# for i in range(500):
+#     txt[i] = [txt[i]]
+#     if i<250:
+#         txt[i].append(0)
+#     else:
+#         txt[i].append(1)
+#     txt[i] = np.array(txt[i])
+# txt = np.array(txt)
 
-np.random.shuffle(txt)
+# np.random.shuffle(txt)
 
-ExtrinsicEvaluation("B").eval(txt)
+# ExtrinsicEvaluation("B").eval(txt)

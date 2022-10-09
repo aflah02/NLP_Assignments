@@ -68,10 +68,10 @@ class LanguageModel:
                 denominator = self.unigram_counts[bigram[0]]
 
                 if self.add_to_numerator:
-                    numerator += self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
+                    numerator *= self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
 
                 if self.add_to_denominator:
-                    denominator -= self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
+                    denominator /= self.score_dict[bigram[1]] * sentiment * self.sentiment_scale_factor
 
                 normalized_prob = numerator / denominator
 
