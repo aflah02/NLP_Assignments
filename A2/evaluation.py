@@ -20,7 +20,7 @@ def preprocess_text(text):
     text = remove_punctuations(text)
     text = remove_whitespaces(text)
     text = tokenization(text)
-    text = spelling_correction(text, 'autocorrect_full')
+    text = spelling_correction(text, 'textblob')
     text = remove_alphanum(text)
     return ' '.join(text)
 
