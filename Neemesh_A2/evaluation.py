@@ -6,15 +6,12 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from LanguageModels import *
 from preprocess_text import *
-import math
 
 def train_and_evaluate(train_sentences, train_labels, test_sentences, test_labels):
     model = make_pipeline(TfidfVectorizer(), MultinomialNB())
     model.fit(train_sentences, train_labels)
     predicted_test_labels = model.predict(test_sentences)
     return accuracy_score(test_labels, predicted_test_labels)
-
-def ceil(number, digits) -> float: return math.ceil((10.0 ** digits) * number) / (10.0 ** digits)
 
 def preprocess_text(text):
     text = lowercase_text(text)
@@ -77,7 +74,7 @@ class ExtrinsicEvaluation:
             a_test_sentences, a_test_labels = df_a_test["pretext"].values, df_a_test["LABEL"].values
             acc_A = train_and_evaluate(a_train_sentences, a_train_labels, a_test_sentences, a_test_labels)
 
-            print("Accuracy on A1 dataset: ", ceil(acc_A, 4)*100)
+            print("Accuracy on A1 dataset: ", round(100*acc_A, 2))
         
         elif self.dataset_type=="B":
             df_a_train = pd.read_csv("A2/A1_dataset.csv")
