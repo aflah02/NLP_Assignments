@@ -57,26 +57,27 @@ class ExtrinsicEvaluation:
     """
     def __init__(self, dataset_type = "A"):
         self.dataset_type = dataset_type
-        self.df_test = pd.read_csv("A2/A2_test_dataset.csv")
+        self.df_test = pd.read_csv("A2_test_dataset_preprocessed.csv")
 
     def eval(self, generated_sentences = None):
         """
         Evaluate on the given dataset type
         """
         if self.dataset_type=="A":
-            df_a_train = pd.read_csv("A2/A1_dataset.csv")
+            df_a_train = pd.read_csv("A1_dataset.csv")
             df_a_test = self.df_test
+            df_a_test.fillna(" ", inplace = True)
             df_a_train['preprocessed_text'] = df_a_train['TEXT'].apply(preprocess_text)
-            df_a_test['preprocessed_text'] = df_a_test['TEXT'].apply(preprocess_text)
+            # df_a_test['preprocessed_text'] = df_a_test['TEXT'].apply(preprocess_text)
 
             a_train_sentences, a_train_labels = df_a_train["preprocessed_text"].values, df_a_train["LABEL"].values
-            a_test_sentences, a_test_labels = df_a_test["preprocessed_text"].values, df_a_test["LABEL"].values
+            a_test_sentences, a_test_labels = df_a_test["pretext"].values, df_a_test["LABEL"].values
             acc_A = train_and_evaluate(a_train_sentences, a_train_labels, a_test_sentences, a_test_labels)
 
-            print("Accuracy on A1 dataset: ", acc_A)
+            print("Accuracy on A1 dataset: ", round(100*acc_A, 2))
         
         elif self.dataset_type=="B":
-            df_a_train = pd.read_csv("A2/A1_dataset.csv")
+            df_a_train = pd.read_csv("A1_dataset.csv")
             df_a_train['preprocessed_text'] = df_a_train['TEXT'].apply(preprocess_text)
             df_b_test = self.df_test
             df_b_test['preprocessed_text'] = df_b_test['TEXT'].apply(preprocess_text)
@@ -89,7 +90,7 @@ class ExtrinsicEvaluation:
             b_train_labels = np.append(b_train_labels, a_train_labels)
             acc_B = train_and_evaluate(b_train_sentences, b_train_labels, b_test_sentences, b_test_labels)
 
-            print("Accuracy on our generated dataset: ", acc_B)
+            print("Accuracy on our generated dataset: ", round(100*acc_B, 2))
 
         else:
             return ValueError("Pass the appropriate dataset type from A or B.")

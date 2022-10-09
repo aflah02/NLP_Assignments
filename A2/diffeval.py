@@ -97,7 +97,8 @@ class ExtrinsicEvaluation:
             # Concatenate the generated sentences with the original training sentences
             train_sentences = np.concatenate((train_sentences, generated_sentences))
             train_labels = np.concatenate((train_labels, generated_sentiments))
-        
+        print("Train Sentences: ", len(train_sentences))
+        print("Train Labels: ", len(train_labels))
         return train_sentences, train_labels
     
     def build_test(self):

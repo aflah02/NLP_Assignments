@@ -15,14 +15,14 @@ ExtrinsicEvaluation("A").eval()
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_gen_only_ext.txt", 'r') as f:
+with open("generated_sentences/neg_gen_only_ext.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_gen_only_ext.txt", 'r') as f:
+with open("generated_sentences/pos_gen_only_ext.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
@@ -49,14 +49,14 @@ ExtrinsicEvaluation("B").eval(txt)
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_gen_add_numerator.txt", 'r') as f:
+with open("generated_sentences/neg_gen_add_numerator.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_gen_add_numerator.txt", 'r') as f:
+with open("generated_sentences/pos_gen_add_numerator.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
@@ -83,14 +83,14 @@ ExtrinsicEvaluation("B").eval(txt)
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_gen_mul_numerator.txt", 'r') as f:
+with open("generated_sentences/neg_gen_mul_numerator.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_gen_mul_numerator.txt", 'r') as f:
+with open("generated_sentences/pos_gen_mul_numerator.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
@@ -117,14 +117,14 @@ ExtrinsicEvaluation("B").eval(txt)
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_gen_div_denominator.txt", 'r') as f:
+with open("generated_sentences/neg_gen_div_denominator.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_gen_div_denominator.txt", 'r') as f:
+with open("generated_sentences/pos_gen_div_denominator.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
@@ -151,14 +151,14 @@ ExtrinsicEvaluation("B").eval(txt)
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_hf_prompts.txt", 'r') as f:
+with open("generated_sentences/neg_hf_prompts.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_hf_prompts.txt", 'r') as f:
+with open("generated_sentences/pos_hf_prompts.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
@@ -185,14 +185,14 @@ ExtrinsicEvaluation("B").eval(txt)
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_ppl_normalized.txt", 'r') as f:
+with open("generated_sentences/neg_ppl_normalized.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_ppl_normalized.txt", 'r') as f:
+with open("generated_sentences/pos_ppl_normalized.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
@@ -219,14 +219,14 @@ ExtrinsicEvaluation("B").eval(txt)
 print("--------------------------------------------------------------------------")
 
 neg_txt = []
-with open("Neemesh_A2/generated_sentences/neg_vader_textblob.txt", 'r') as f:
+with open("generated_sentences/neg_vader_textblob.txt", 'r') as f:
     neg_txt = f.readlines()
 for each in range(len(neg_txt)):
     neg_txt[each] = neg_txt[each][:-2]
     neg_txt[each] = ' '.join(neg_txt[each].split()[:-1])
 
 pos_txt = []
-with open("Neemesh_A2/generated_sentences/pos_vader_textblob.txt", 'r') as f:
+with open("generated_sentences/pos_vader_textblob.txt", 'r') as f:
     pos_txt = f.readlines()
 for each in range(len(pos_txt)):
     pos_txt[each] = pos_txt[each][:-2]
