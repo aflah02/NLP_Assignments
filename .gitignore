@@ -183,3 +183,4 @@ A2 Submission/bigram_model_dumps/add_5_with_unigram_prior_smoothed_bigrams.pickl
 A2 Submission/bigram_model_dumps/bigram_wrapper.pickle
 A2 Submission/bigram_model_dumps/laplace_smoothed_bigrams.pickle
 A2/bigram_model_dumps/lbdump.pickle
+A3/WordEmbeddingSaves/
