@@ -1,6 +1,6 @@
 # NLP Assignments
 
-Assignments done for [Natural Language Processing (NLP) CSE556](http://techtree.iiitd.edu.in/viewDescription/filename?=CSE556) in 2022 at IIITD
+Assignments done for [Natural Language Processing (NLP) CSE556](http://techtree.iiitd.edu.in/viewDescription/filename?=CSE556) (2022) at IIITD
 
 **Assignment 1** - Regex, Text Processing, Visualization, Rule Based Sentiment Analysis
 
